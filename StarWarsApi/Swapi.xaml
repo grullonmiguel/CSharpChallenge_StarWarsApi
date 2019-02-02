@@ -6,7 +6,7 @@
         xmlns:vm="clr-namespace:StarWarsApi"
         xmlns:cv="clr-namespace:StarWarsApi.Common"
         mc:Ignorable="d"
-        Title="Swapi" Height="768" Width="1024" 
+        Title="Swapi" Height="600" Width="800" 
         FocusManager.FocusedElement="{Binding ElementName=txtSearch}">
 
     <Window.DataContext>
@@ -81,7 +81,7 @@
                    Text="{Binding Path=PeopleCount, StringFormat='Total Characters: {0}', FallbackValue=''}"  />
 
         <!--Results Row -->
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" Background="#FF222222" >
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -91,22 +91,18 @@
             <!-- Characters Grid-->
             <DataGrid IsReadOnly="True" 
                       RowHeight="32"
-                      HeadersVisibility="Column"
+                      HeadersVisibility="None"
                       AutoGenerateColumns="False"
                       SelectedItem="{Binding SelectedCharacter, Mode=TwoWay}"
                       ItemsSource="{Binding Path=PeopleList}" >
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Id" Binding="{Binding Path=Id, Mode=OneWay}" />
-                    <DataGridTextColumn Header="Name" Binding="{Binding Path=Name, Mode=OneWay}" />
+                    <DataGridTextColumn Header="Name" Binding="{Binding Path=Name, Mode=OneWay}" MinWidth="175" />
+                    <DataGridTextColumn Header="Gender" Binding="{Binding Path=Gender, Mode=OneWay}" MinWidth="75" />
                     <DataGridTextColumn Header="Birth Year" Binding="{Binding Path=Birth_Year, Mode=OneWay}" />
-                    <DataGridTextColumn Header="Gender" Binding="{Binding Path=Gender, Mode=OneWay}" />
-                    <DataGridTextColumn Header="Eye Color" Binding="{Binding Path=Eye_Color, Mode=OneWay}"/>
-                    <DataGridTextColumn Header="Hair Color" Binding="{Binding Path=Hair_Color, Mode=OneWay}" />
-                    <DataGridTextColumn Header="Skin Color" Binding="{Binding Path=Skin_Color, Mode=OneWay}" />
                 </DataGrid.Columns>
             </DataGrid>
 
-            <Border Background="#FF222222" Grid.Column="2" >
+            <Border Grid.Column="2" >
                 
                 <StackPanel Margin="2,0,0,0" >
 
@@ -118,9 +114,8 @@
                     AutoGenerateColumns="False"
                     ItemsSource="{Binding Path=VehicleList}" RowHeight="32">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Name" Binding="{Binding Path=Name, Mode=OneWay}" />
+                            <DataGridTextColumn Header="Name" Binding="{Binding Path=Name, Mode=OneWay}" MinWidth="175" />
                             <DataGridTextColumn Header="Model" Binding="{Binding Path=Model, Mode=OneWay}" />
-                            <DataGridTextColumn Header="Manufacturer" Binding="{Binding Path=Manufacturer, Mode=OneWay}"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
@@ -132,9 +127,8 @@
                     AutoGenerateColumns="False"
                     ItemsSource="{Binding Path=StarshipList}" RowHeight="32">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Name" Binding="{Binding Path=Name, Mode=OneWay}" />
+                            <DataGridTextColumn Header="Name" Binding="{Binding Path=Name, Mode=OneWay}" MinWidth="175" />
                             <DataGridTextColumn Header="Model" Binding="{Binding Path=Model, Mode=OneWay}" />
-                            <DataGridTextColumn Header="Manufacturer" Binding="{Binding Path=Manufacturer, Mode=OneWay}"/>
                         </DataGrid.Columns>
                     </DataGrid>
 

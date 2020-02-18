@@ -3,8 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:StarWarsApi"
-        xmlns:cv="clr-namespace:StarWarsApi.Common"
+        xmlns:vm="clr-namespace:StarWarsApi.ViewModels"
         mc:Ignorable="d"
         Title="Swapi" Height="600" Width="800" 
         FocusManager.FocusedElement="{Binding ElementName=txtSearch}">
@@ -14,7 +13,7 @@
     </Window.DataContext>
 
     <Window.Resources>
-        <cv:BoolToVisibilityConverter x:Key="converter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
 
     <Grid>
@@ -140,7 +139,7 @@
         <Border Grid.Row="0"
                 Grid.RowSpan="3"
                 Background="#99000000"
-                Visibility="{Binding Path=IsSearching, Converter={StaticResource converter}}">
+                Visibility="{Binding Path=IsSearching, Converter={StaticResource BooleanToVisibilityConverter}}">
             
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"

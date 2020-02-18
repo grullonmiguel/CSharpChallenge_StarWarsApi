@@ -98,7 +98,7 @@ namespace StarWarsApi
         /// </summary>
         public ICommand SearchCommand
         {
-            get { return new BaseCommandModel(param => GetCharacter(), param => CanSearch); }
+            get { return new RelayCommand(param => GetCharacter(), param => CanSearch); }
         }
 
         /// <summary>

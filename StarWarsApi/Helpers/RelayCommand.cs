@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace StarWarsApi.Common
+namespace StarWarsApi.Helpers
 {
-    internal class BaseCommandModel : ICommand
+    internal class RelayCommand : ICommand
     {
 
         private readonly Action<object> _action;
         private readonly Predicate<object> _canExecute;
 
-        public BaseCommandModel(Action<object> action, Predicate<object> canExecute) : base()
+        public RelayCommand(Action<object> action, Predicate<object> canExecute) : base()
         {
             _action = action;
             _canExecute = canExecute;

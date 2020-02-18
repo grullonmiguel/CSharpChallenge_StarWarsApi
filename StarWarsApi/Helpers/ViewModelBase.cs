@@ -1,13 +1,23 @@
 ﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace StarWarsApi.Helpers
 {
     internal class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
+
+        protected void Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (Equals(storage, value))
+            {
+                return;
+            }
+
+            storage = value;
+            OnPropertyChanged(propertyName);
         }
+
+        protected void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

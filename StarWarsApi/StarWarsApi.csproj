@@ -68,7 +68,7 @@
     <Compile Include="Services\SwapiProcessor.cs" />
     <Compile Include="Services\Vehicle.cs" />
     <Compile Include="SwapiViewModel.cs" />
-    <Page Include="Common\Styles.xaml">
+    <Page Include="Styles\Styles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

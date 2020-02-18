@@ -81,7 +81,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Common\BaseCommandModel.cs" />
-    <Compile Include="Common\BaseViewModel.cs" />
+    <Compile Include="Helpers\ViewModelBase.cs" />
     <Compile Include="Swapi.xaml.cs">
       <DependentUpon>Swapi.xaml</DependentUpon>
       <SubType>Code</SubType>

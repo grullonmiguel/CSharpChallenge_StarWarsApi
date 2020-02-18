@@ -1,4 +1,5 @@
 ﻿using StarWarsApi.Common;
+using StarWarsApi.Helpers;
 using StarWarsApi.Services;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Windows.Input;
 
 namespace StarWarsApi
 {
-    internal class SwapiViewModel : BaseViewModel
+    internal class SwapiViewModel : ViewModelBase
     {
 
         private SwapiProcessor _swapiProcessor;

@@ -116,7 +116,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Resource Include="Common\at-at.png" />
+    <Resource Include="Assets\at-at.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

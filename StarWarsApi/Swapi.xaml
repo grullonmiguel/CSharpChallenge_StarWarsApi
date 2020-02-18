@@ -60,7 +60,7 @@
         <Image Width="50"
                Margin="20,0"
                HorizontalAlignment="Left" 
-               Source="Common/at-at.png" />
+               Source="Assets/at-at.png" />
 
         <!--SWAPI Logo -->
         <Border Grid.Row="1"

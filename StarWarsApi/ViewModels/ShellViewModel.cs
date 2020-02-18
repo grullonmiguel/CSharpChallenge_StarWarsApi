@@ -1,5 +1,4 @@
-﻿using StarWarsApi.Common;
-using StarWarsApi.Helpers;
+﻿using StarWarsApi.Helpers;
 using StarWarsApi.Services;
 using System;
 using System.Collections.Generic;
@@ -10,12 +9,12 @@ using System.Windows.Input;
 
 namespace StarWarsApi.ViewModels
 {
-    internal class SwapiViewModel : ViewModelBase
+    internal class ShellViewModel : ViewModelBase
     {
 
         private SwapiProcessor _swapiProcessor;
 
-        public SwapiViewModel()
+        public ShellViewModel()
         {
             _swapiProcessor = new SwapiProcessor();
             PeopleList = new ObservableCollection<People>();

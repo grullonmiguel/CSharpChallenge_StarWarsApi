@@ -1,4 +1,5 @@
 ﻿using StarWarsApi.Helpers;
+using StarWarsApi.Models;
 using StarWarsApi.Services;
 using System;
 using System.Collections.Generic;
@@ -11,94 +12,19 @@ namespace StarWarsApi.ViewModels
 {
     internal class ShellViewModel : ViewModelBase
     {
+        #region Fields
 
+        private int? characterId;
         private SwapiProcessor _swapiProcessor;
-
-        public ShellViewModel()
-        {
-            _swapiProcessor = new SwapiProcessor();
-            PeopleList = new ObservableCollection<People>();
-        }
-
-        /// <summary>
-        /// The ID to search in the SWAPI API
-        /// https://swapi.co/api/people/1
-        /// </summary>
-        private int? _swapiID;
-        public int? SwapiID
-        {
-            get { return _swapiID; }
-            set {_swapiID = value;OnPropertyChanged("SwapiID");}
-        }
-
-        /// <summary>
-        /// The list of star wars characters returned from the API
-        /// </summary>
-        private ObservableCollection<People> _peopleList;
-        public ObservableCollection<People> PeopleList
-        {
-            get { return _peopleList; }
-            set { _peopleList = value; OnPropertyChanged("PeopleList"); }
-        }
-
-        private List<Vehicle> _vehicleList;
-        public List<Vehicle> VehicleList
-        {
-            get { return _vehicleList; }
-            set { _vehicleList = value; OnPropertyChanged("VehicleList"); }
-        }
-
-        private List<Starship> _starshipList;
-        public List<Starship> StarshipList
-        {
-            get { return _starshipList; }
-            set { _starshipList = value; OnPropertyChanged("StarshipList"); }
-        }
-
-        /// <summary>
-        /// Gets or sets the User selected
-        /// </summary>
-        private People _selectedCharacter;
-        public People SelectedCharacter
-        {
-            get { return _selectedCharacter; }
-            set
-            {
-                _selectedCharacter = value;
-                OnPropertyChanged("SelectedCharacter");
-                VehicleList = SelectedCharacter?.VehicleList;
-                StarshipList = SelectedCharacter?.StarshipList;
-            }
-        }
-
-        /// <summary>
-        /// Set to True when API call is being made
-        /// </summary>
         private bool _isSearching;
-        public bool IsSearching
-        {
-            get { return _isSearching; }
-            set { _isSearching = value; OnPropertyChanged("IsSearching"); }
-        }
+        private ObservableCollection<Character> characters;
+        private Character _selectedCharacter;
+        private List<Starship> starships;
+        private List<Vehicle> vehicles;
 
-        /// <summary>
-        /// Display Total Character Count
-        /// </summary>
-        private int _peopleCount;
-        public int PeopleCount
-        {
-            get { return _peopleCount; }
-            set { _peopleCount = value; OnPropertyChanged("PeopleCount"); }
-        }
+        #endregion
 
-
-        /// <summary>
-        /// Command to initiate a character search
-        /// </summary>
-        public ICommand SearchCommand
-        {
-            get { return new RelayCommand(param => GetCharacter(), param => CanSearch); }
-        }
+        #region Properties
 
         /// <summary>
         /// Enabled when a numeric value greater than zero is entered
@@ -107,7 +33,7 @@ namespace StarWarsApi.ViewModels
         {
             get
             {
-               if (SwapiID == null || SwapiID <= 0 || IsSearching == true)
+                if (CharacterId == null || CharacterId <= 0 || IsSearching == true)
                 {
                     return false;
                 }
@@ -116,25 +42,103 @@ namespace StarWarsApi.ViewModels
             }
         }
 
+        public int CharacterCount
+        {
+            get => Characters.Count;
+        }
+
+        /// <summary>
+        /// The ID to search in the SWAPI API
+        /// https://swapi.co/api/people/1
+        /// </summary>
+        public int? CharacterId
+        {
+            get => characterId;
+            set => Set(ref characterId, value);
+        }
+
+        /// <summary>
+        /// Contains a list of characters
+        /// </summary>
+        public ObservableCollection<Character> Characters
+        {
+            get => characters;
+            set => Set(ref characters, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the character selected
+        /// </summary>
+        public Character SelectedCharacter
+        {
+            get => _selectedCharacter;
+            set
+            {
+                Set(ref _selectedCharacter, value);
+                Vehicles = SelectedCharacter?.VehicleList;
+                Starships = SelectedCharacter?.StarshipList;
+            }
+        }
+
+        /// <summary>
+        /// Set to True when API call is being made
+        /// </summary>
+        public bool IsSearching
+        {
+            get => _isSearching;
+            set => Set(ref _isSearching, value);
+        }
+
+        public List<Starship> Starships
+        {
+            get => starships;
+            set => Set(ref starships, value);
+        }
+
+        public List<Vehicle> Vehicles
+        {
+            get => vehicles;
+            set => Set(ref vehicles, value);
+        }
+
+        #endregion
+
+        #region Commands
+        public ICommand SearchCharacterCommand { get; }
+
+        #endregion
+
+        #region Constructor
+
+        public ShellViewModel()
+        {
+            _swapiProcessor = new SwapiProcessor();
+            Characters = new ObservableCollection<Character>();
+            SearchCharacterCommand = new RelayCommand(async () => await LoadCharacterAsync(), () => CanSearch);
+        }
+
+        #endregion
+
+        #region Methods
+
         /// <summary>
         /// Execute API call to SWAPI and add
         /// Character to list if successful
         /// </summary>
-        private async void GetCharacter() => await LoadCharacterAsync();
-
         private async Task LoadCharacterAsync()
         {
-            if (PeopleList.Any(p => p.Id == (int)SwapiID) || SwapiID == null || SwapiID <= 0)
-                return;
-
             try
             {
+                if (ValidateCharacterId()) 
+                    return;
+
                 IsSearching = true;
 
-                var character = await _swapiProcessor.GetCharacterAsync((int)SwapiID);
+                var character = await _swapiProcessor.GetCharacterAsync((int)CharacterId);
 
-                PeopleList.Add(character);
-                PeopleCount = PeopleList.Count;
+                Characters.Add(character);
+
+                OnPropertyChanged(nameof(CharacterCount));
             }
             catch (Exception e)
             {
@@ -142,10 +146,17 @@ namespace StarWarsApi.ViewModels
             }
             finally
             {
-                SwapiID = null;
+                CharacterId = null;
                 IsSearching = false;
             }
         }
+
+        private bool ValidateCharacterId()
+        {
+            return Characters.Any(p => p.Id == CharacterId) || CharacterId == null || CharacterId <= 0;
+        }
+
+        #endregion
 
     }
 }

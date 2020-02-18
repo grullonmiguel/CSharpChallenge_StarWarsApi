@@ -62,10 +62,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Services\ApiHelper.cs" />
-    <Compile Include="Services\People.cs" />
-    <Compile Include="Services\Starship.cs" />
+    <Compile Include="Models\Character.cs" />
+    <Compile Include="Models\Starship.cs" />
     <Compile Include="Services\SwapiProcessor.cs" />
-    <Compile Include="Services\Vehicle.cs" />
+    <Compile Include="Models\Vehicle.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Page Include="Styles\Styles.xaml">
       <SubType>Designer</SubType>

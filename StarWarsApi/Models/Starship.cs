@@ -1,9 +1,11 @@
-﻿namespace StarWarsApi.Services
+﻿namespace StarWarsApi.Models
 {
     internal class Starship
     {
         public string Name { get; set; }
+
         public string Model { get; set; }
+
         public string Manufacturer { get; set; }
     }
 }

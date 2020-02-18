@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StarWarsApi.Models;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -6,20 +7,20 @@ namespace StarWarsApi.Services
 {
     internal class SwapiProcessor
     {
-        private People _people;
+        private Character _people;
 
         public SwapiProcessor()
         {
             ApiHelper.InitializeClient();
         }
 
-        public async Task<People> GetCharacterAsync(int id)
+        public async Task<Character> GetCharacterAsync(int id)
         {
             using (HttpResponseMessage peopleResponse = await ApiHelper.ApiClient.GetAsync($"https://swapi.co/api/people/{id}"))
             {
                 if (peopleResponse.IsSuccessStatusCode)
                 {
-                    _people = await peopleResponse.Content.ReadAsAsync<People>();
+                    _people = await peopleResponse.Content.ReadAsAsync<Character>();
 
                     _people.Id = id;
 

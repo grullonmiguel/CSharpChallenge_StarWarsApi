@@ -9,7 +9,7 @@ namespace StarWarsApi.Services
     /// </summary>
     internal static class ApiHelper
     {
-        public static HttpClient ApiClient { get; set; }
+        public static HttpClient ApiClient { get; private set; }
 
         public static void InitializeClient()
         {

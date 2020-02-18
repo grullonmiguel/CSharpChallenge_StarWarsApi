@@ -1,9 +1,11 @@
-﻿namespace StarWarsApi.Services
+﻿namespace StarWarsApi.Models
 {
-    class Vehicle
+    internal class Vehicle
     {
         public string Name { get; set; }
+
         public string Model { get; set; }
+
         public string Manufacturer { get; set; }
     }
 }

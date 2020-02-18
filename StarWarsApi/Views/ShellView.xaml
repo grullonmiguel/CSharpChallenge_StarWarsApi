@@ -1,12 +1,10 @@
 ﻿<Window x:Class="StarWarsApi.Views.ShellView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:StarWarsApi.ViewModels"
-        mc:Ignorable="d"
         Title="Swapi" Height="600" Width="800" 
-        FocusManager.FocusedElement="{Binding ElementName=txtSearch}">
+        FocusManager.FocusedElement="{Binding ElementName=txtSearch}"
+        Background="{StaticResource BackgroundBrush1}">
 
     <Window.DataContext>
         <vm:ShellViewModel/>
@@ -24,52 +22,49 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!--Search Row -->
-        <Border Grid.Row="0"
-                Padding="15"
-                Background="#FF444444"
-                BorderBrush="#FF000000"
-                BorderThickness="0,0,0,1">
+        <!--S
+        -->
+        <Border Grid.Row="0" Style="{StaticResource Card}">
 
-            <StackPanel Orientation="Horizontal"
-                        Height="32"
-                        HorizontalAlignment="Right" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
 
-                <TextBox Width="125" 
-                         FontSize="20"
-                         Padding="2"
-                         Foreground="#FF555555"
-                         BorderThickness="0" 
-                         Name="txtSearch"
-                         Text="{Binding Path=SwapiID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <!-- Starwars AT-AT Logo-->
+                <Image Width="60" Source="../Assets/at-at.png" />
 
-                <Button Width="75" 
-                        Height="32"
-                        FontSize="16"
-                        Content="Request"
-                        IsDefault="True"
-                        Command="{Binding SearchCommand}" 
-                        IsEnabled="{Binding SearchCommand}" />
+                <!--SWAPI Logo -->
+                <StackPanel Grid.Column="0" Grid.ColumnSpan="3">
+                    <TextBlock FontSize="32" Style="{StaticResource TextBlockSwapi}" Text="SWAPI" />
+                    <TextBlock FontSize="16" Style="{StaticResource TextBlockSwapi}"  Text="The Star Wars API"  />
+                </StackPanel>
+                
+                <!-- Search -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" >
+
+                    <TextBox Width="105" 
+                             FontSize="20"
+                             Padding="2"
+                             Foreground="#FF555555"
+                             BorderThickness="0" 
+                             Name="txtSearch"
+                             Text="{Binding Path=CharacterId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Button Width="100"  
+                            FontSize="16" 
+                            Content="SEARCH"
+                            IsDefault="True"
+                            Command="{Binding SearchCharacterCommand}"  />
 
             </StackPanel>
-            
+            </Grid>
+                    
         </Border>
 
-        <!-- Starwars AT-AT Logo-->
-        <Image Width="50"
-               Margin="20,0"
-               HorizontalAlignment="Left" 
-               Source="Assets/at-at.png" />
 
-        <!--SWAPI Logo -->
-        <Border Grid.Row="1"
-                Padding="5"
-                Background="#FF222222">
-            <StackPanel Margin="10">
-                <TextBlock FontSize="32" Style="{StaticResource TextBlockSwapi}" Text="SWAPI" />
-                <TextBlock FontSize="16" Style="{StaticResource TextBlockSwapi}"  Text="The Star Wars API"  />                
-            </StackPanel>
-        </Border>
 
         <TextBlock Grid.Row="1"  
                    FontSize="16"
@@ -77,10 +72,10 @@
                    HorizontalAlignment="Left"
                    VerticalAlignment="Bottom"
                    Foreground="#FF999999"
-                   Text="{Binding Path=PeopleCount, StringFormat='Total Characters: {0}', FallbackValue=''}"  />
+                   Text="{Binding Path=CharacterCount, StringFormat='Total Characters: {0}', FallbackValue=''}"  />
 
         <!--Results Row -->
-        <Grid Grid.Row="2" Background="#FF222222" >
+        <Grid Grid.Row="2"  >
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -93,7 +88,7 @@
                       HeadersVisibility="None"
                       AutoGenerateColumns="False"
                       SelectedItem="{Binding SelectedCharacter, Mode=TwoWay}"
-                      ItemsSource="{Binding Path=PeopleList}" >
+                      ItemsSource="{Binding Path=Characters}" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Path=Name, Mode=OneWay}" MinWidth="175" />
                     <DataGridTextColumn Header="Gender" Binding="{Binding Path=Gender, Mode=OneWay}" MinWidth="75" />
@@ -111,7 +106,7 @@
                     IsReadOnly="True" 
                     HeadersVisibility="None" 
                     AutoGenerateColumns="False"
-                    ItemsSource="{Binding Path=VehicleList}" RowHeight="32">
+                    ItemsSource="{Binding Path=Vehicles}" RowHeight="32">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name" Binding="{Binding Path=Name, Mode=OneWay}" MinWidth="175" />
                             <DataGridTextColumn Header="Model" Binding="{Binding Path=Model, Mode=OneWay}" />
@@ -124,7 +119,7 @@
                     IsReadOnly="True" 
                     HeadersVisibility="None" 
                     AutoGenerateColumns="False"
-                    ItemsSource="{Binding Path=StarshipList}" RowHeight="32">
+                    ItemsSource="{Binding Path=Starships}" RowHeight="32">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name" Binding="{Binding Path=Name, Mode=OneWay}" MinWidth="175" />
                             <DataGridTextColumn Header="Model" Binding="{Binding Path=Model, Mode=OneWay}" />
@@ -149,6 +144,5 @@
         </Border>
         
     </Grid>
-    
-    
+      
 </Window>

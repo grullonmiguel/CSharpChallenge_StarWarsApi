@@ -1,25 +1,23 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <!--  Color Styles  -->
-    <SolidColorBrush x:Key="BackgroundBrush1" Color="#FF2C333F" />
-    <SolidColorBrush x:Key="BackgroundBrush2" Color="#FF1B222C" />
-    <SolidColorBrush x:Key="BackgroundBrush3" Color="#AB151A23" />
-    <SolidColorBrush x:Key="BackgroundBrush4" Color="#FF21293C" />
-    <SolidColorBrush x:Key="ButtonColor" Color="#FFFFFF00" />
-    <SolidColorBrush x:Key="ButtonColorOver" Color="#FFFFD300" />
-    <SolidColorBrush x:Key="ButtonColorPressed" Color="#FFFDA50F" />
-    <SolidColorBrush x:Key="ButtonColorDisabled" Color="#FFC3C3C6" />
-    <SolidColorBrush x:Key="FontYellow" Color="#FFFFFF00" />
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="_Colors.xaml" />
+        <ResourceDictionary Source="_Fonts.xaml" />
+        <ResourceDictionary Source="_Thickness.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+ 
     <!--  A Style that affects all Separators  -->
     <Style TargetType="Separator">
         <Setter Property="Background" Value="{StaticResource BackgroundBrush3}" />
     </Style>
+    
+    <Style TargetType="Window" x:Key="WindowStyle">
+        <Setter Property="Background" Value="{StaticResource ApplicationBackgroundThemeBrush}" />
+    </Style>
 
+    <!--Common texts styles -->
     <Style TargetType="TextBlock" x:Key="BaseTextBlockStyle" >
-        <Setter Property="Margin"                            Value="0"/>
-        <Setter Property="FontSize"                          Value="14" />
-        <Setter Property="FontFamily"                        Value="Segoe UI Light, Lucida Sans Unicode, Arial, Verdana" />
         <Setter Property="TextWrapping"                      Value="Wrap"/>
         <Setter Property="TextTrimming"                      Value="WordEllipsis" />
         <Setter Property="SnapsToDevicePixels"               Value="True" />
@@ -27,21 +25,41 @@
         <Setter Property="VerticalAlignment"                 Value="Center"/>
         <Setter Property="Typography.StylisticSet20"         Value="True" />
         <Setter Property="Typography.DiscretionaryLigatures" Value="True" />
+        <Setter Property="Margin"                            Value="{StaticResource NoMargin}"/>
+        <Setter Property="FontSize"                          Value="{StaticResource FontSize-Normal}" />
+        <Setter Property="FontFamily"                        Value="{StaticResource DefaultFont}" />
     </Style>
 
-    <!--  A Style that affects all TextBlocks  -->
+
     <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
         
     </Style>
 
-    <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" x:Key="HeaderStyle"> 
+    <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" x:Key="TitleStyle">
         <Setter Property="FontWeight"                        Value="Bold" />
         <Setter Property="HorizontalAlignment"               Value="Center" />
         <Setter Property="TextWrapping"                      Value="NoWrap"/>
         <Setter Property="TextTrimming"                      Value="None" />
-        <Setter Property="Foreground"                        Value="{StaticResource FontYellow}" />
+        <Setter Property="FontSize"                          Value="{StaticResource FontSize-XXLarge}" />
+        <Setter Property="Foreground"                        Value="{StaticResource ApplicationForegroundThemeBrush}" />
     </Style>
-    
+
+    <Style TargetType="TextBlock" BasedOn="{StaticResource TitleStyle}" x:Key="SubTitleStyle"> 
+        <Setter Property="FontSize"                          Value="{StaticResource FontSize-Large}" />
+    </Style>
+
+    <Style TargetType="TextBlock" BasedOn="{StaticResource TitleStyle}" x:Key="CharacterTitleStyle">
+        <Setter Property="FontSize"                         Value="{StaticResource FontSize-Larger}" />
+        <Setter Property="HorizontalAlignment"              Value="Left" />
+    </Style>
+
+    <Style TargetType="TextBlock" BasedOn="{StaticResource TitleStyle}" x:Key="CharacterDetailStyle">
+        <Setter Property="FontSize"                         Value="{StaticResource FontSize-Large}" />
+        <Setter Property="Margin"                           Value="0 16 0 0" />
+        <Setter Property="HorizontalAlignment"              Value="Left" />
+    </Style>
+
+    <!--Common Button styles -->
     <Style TargetType="{x:Type Button}" x:Key="ButtonStyleBase" >
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="FontSize" Value="14" />
@@ -87,9 +105,10 @@
     </Style>
 
     <Style TargetType="Button" BasedOn="{StaticResource ButtonStyleBase}" >
+    
     </Style>
 
-    <!--  A Style that affects all DataGrids  -->
+    <!--Common Datagrid styles -->
     <Style TargetType="DataGrid" BasedOn="{x:Null}" >
         <Setter Property="AutoGenerateColumns" Value="False" />
         <Setter Property="Background" Value="Transparent" />
@@ -168,6 +187,10 @@
                     ShadowDepth="3" />
             </Setter.Value>
         </Setter>-->
+    </Style>
+
+    <Style TargetType="Border" x:Key="MasterDetailBoder">
+        <Setter Property="Background" Value="{StaticResource MasterDetailBackgroundThemeBrush}" />
     </Style>
 
 </ResourceDictionary>

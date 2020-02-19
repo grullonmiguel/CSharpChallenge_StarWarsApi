@@ -2,6 +2,7 @@
 using StarWarsApi.Core.Services;
 using StarWarsApi.Helpers;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,7 +18,6 @@ namespace StarWarsApi.ViewModels
         private bool _isSearching;
         private Character _characterSelected;
         private ObservableCollection<Film> films;
-        private ObservableCollection<Character> characters;
         private ObservableCollection<Starship> starships;
         private ObservableCollection<Vehicle> vehicles;
 
@@ -47,11 +47,7 @@ namespace StarWarsApi.ViewModels
         /// <summary>
         /// Contains a list of characters
         /// </summary>
-        public ObservableCollection<Character> Characters
-        {
-            get => characters;
-            set => Set(ref characters, value);
-        }
+        public List<Character> Characters { get; set; }
 
         /// <summary>
         /// Gets or sets the character selected
@@ -59,25 +55,30 @@ namespace StarWarsApi.ViewModels
         public Character CharacterSelected
         {
             get => _characterSelected;
-            set
-            {
-                Set(ref _characterSelected, value);
+            set => Set(ref _characterSelected, value);
+        }
 
-                GetStarshipsAsync();
-                GetVehiclesAsync();
-                GetHomeworldAsync();
-                GetFilmsAsync();                
+        private Character _selectedItem;
+
+        public Character SelectedItem
+        {
+            get => _selectedItem;
+            set 
+            { 
+                Set(ref _selectedItem, value);
+                GetCharacterinfo();
             }
         }
 
+
         private string homeWorld;
+        private int myVar;
 
         public string HomeWorld
         {
             get => homeWorld;
             set => Set(ref homeWorld, value);
         }
-
 
         /// <summary>
         /// Set to True when API call is being made
@@ -87,7 +88,6 @@ namespace StarWarsApi.ViewModels
             get => _isSearching;
             set => Set(ref _isSearching, value);
         }
-
 
         public ObservableCollection<Film> Films
         {
@@ -119,22 +119,23 @@ namespace StarWarsApi.ViewModels
         public ShellViewModel()
         {
             _apiService = new ApiService();
-            Characters = new ObservableCollection<Character>();
             Films = new ObservableCollection<Film>();
             Starships = new ObservableCollection<Starship>();
             Vehicles = new ObservableCollection<Vehicle>();
             SearchCharacterCommand = new RelayCommand(async () => await GetCharacterAsync(), () => CanSearch);
+            LoadCharacterList();
+        }
+
+        public async void LoadCharacterList()
+        {
+            var list = await CharacterDataService.GetCharacterDataAsync();
+            Characters = list.ToList();
+            OnPropertyChanged(nameof(CharacterCount));
         }
 
         #endregion
 
         #region Methods
-
-        private void ResetSearch()
-        {
-            CharacterId = null;
-            IsSearching = false;
-        }
 
         private void ShowMessage(string message)
         {
@@ -145,6 +146,18 @@ namespace StarWarsApi.ViewModels
 
         #region Api Search
 
+        private async void GetCharacterinfo()
+        {
+            // Must get character information first
+            await GetCharacterAsync();
+
+            // No need to await methods below
+            _ = GetFilmsAsync();
+            _ = GetStarshipsAsync();
+            _ = GetVehiclesAsync();
+            _ = GetHomeworldAsync();
+        }
+
         /// <summary>
         /// Execute API call to SWAPI and add
         /// Character to list if successful
@@ -153,19 +166,11 @@ namespace StarWarsApi.ViewModels
         {
             try
             {
-                if (Characters.Any(p => p.Id == CharacterId) || CharacterId == null || CharacterId <= 0)
-                    return;
-
                 IsSearching = true;
+                
+                var character = await _apiService.GetAsync<Character>(SelectedItem.URL);
 
-                var character = await _apiService.GetAsync<Character>($"https://swapi.co/api/people/{(int)CharacterId}");
-
-                Characters.Add(character.Value);
-
-                if (Characters.Count == 1)
-                    CharacterSelected = Characters.First();
-
-                OnPropertyChanged(nameof(CharacterCount));
+                CharacterSelected = character.Value;
             }
             catch (Exception e)
             {
@@ -173,7 +178,7 @@ namespace StarWarsApi.ViewModels
             }
             finally
             {
-                ResetSearch();
+                IsSearching = false;
             }
         }
 
@@ -181,6 +186,8 @@ namespace StarWarsApi.ViewModels
         {
             try
             {
+                IsSearching = true;
+
                 Films.Clear();
 
                 foreach (var url in CharacterSelected.Films)
@@ -193,12 +200,18 @@ namespace StarWarsApi.ViewModels
             {
                 ShowMessage(e.Message.ToString());
             }
+            finally
+            {
+                IsSearching = false;
+            }
         }
 
         private async Task GetHomeworldAsync()
         {
             try
             {
+                IsSearching = true;
+
                 if (string.IsNullOrEmpty(CharacterSelected.Homeworld))
                     return;
 
@@ -210,12 +223,18 @@ namespace StarWarsApi.ViewModels
             {
                 ShowMessage(e.Message.ToString());
             }
+            finally
+            {
+                IsSearching = false;
+            }
         }
 
         private async Task GetStarshipsAsync()
         {
             try
             {
+                IsSearching = true;
+
                 Starships.Clear();
                 foreach (var url in CharacterSelected.Starships)
                 {
@@ -227,12 +246,18 @@ namespace StarWarsApi.ViewModels
             {
                 ShowMessage(e.Message.ToString());
             }
+            finally
+            {
+                IsSearching = false;
+            }
         }
 
         private async Task GetVehiclesAsync()
         {
             try
             {
+                IsSearching = true;
+
                 Vehicles.Clear();
 
                 foreach (var url in CharacterSelected.Vehicles)
@@ -244,6 +269,10 @@ namespace StarWarsApi.ViewModels
             catch (Exception e)
             {
                 ShowMessage(e.Message.ToString());
+            }
+            finally
+            {
+                IsSearching = false;
             }
         }
 

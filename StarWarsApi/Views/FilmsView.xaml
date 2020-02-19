@@ -3,22 +3,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <DockPanel>
 
-        <TextBlock DockPanel.Dock="Top" 
-                   FontSize="24"
-                   HorizontalAlignment="Left"
-                   Style="{StaticResource HeaderStyle}">Films</TextBlock>
+        <TextBlock DockPanel.Dock="Top" Style="{StaticResource CharacterTitleStyle}" Text="Films" />
 
-        <ListBox Background="Transparent"
-                 BorderThickness="0"
-                 ItemsSource="{Binding}">
-            <ListBox.ItemTemplate>
+        <ListView Background="Transparent"
+                  BorderThickness="0" 
+                  ItemsSource="{Binding}" >
+
+            <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Title}" 
-                               ToolTip="{Binding ReleaseDate}" 
-                               Style="{StaticResource HeaderStyle}" 
-                               Padding="0 4" />
+                               FontSize="{StaticResource FontSize-Large}" 
+                               Padding="0 4">
+                        <TextBlock.ToolTip>
+                            <ToolTip Content="{Binding Path=ReleaseDate}" ContentStringFormat="{}Released Date: {0}" />
+                        </TextBlock.ToolTip>
+                    </TextBlock>
                 </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            </ListView.ItemTemplate>
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="Red" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+
+        </ListView>
+        
     </DockPanel>
 </UserControl>

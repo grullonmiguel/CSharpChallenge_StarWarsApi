@@ -12,8 +12,8 @@
 
         <!-- Title -->
         <StackPanel Margin="100 0">
-            <TextBlock Style="{StaticResource HeaderStyle}" Text="SWAPI" FontSize="40" />
-            <TextBlock Style="{StaticResource HeaderStyle}" Text="The Star Wars API"  />
+            <TextBlock Style="{StaticResource TitleStyle}" Text="SWAPI" FontSize="40" />
+            <TextBlock Style="{StaticResource SubTitleStyle}" Text="The Star Wars API"  />
         </StackPanel>
         
     </Grid>

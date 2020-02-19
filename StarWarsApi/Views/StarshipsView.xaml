@@ -4,23 +4,34 @@
 
     <DockPanel>
 
-        <TextBlock DockPanel.Dock="Top" 
-                   FontSize="24"
-                   HorizontalAlignment="Left"
-                   Style="{StaticResource HeaderStyle}">Starships</TextBlock>
 
-        <ListBox Background="Transparent"
-                 BorderThickness="0"
-                 ItemsSource="{Binding}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Name}" 
-                               ToolTip="{Binding Model}" 
-                               Style="{StaticResource HeaderStyle}" 
-                               Padding="0 4" />
+        <TextBlock DockPanel.Dock="Top" Style="{StaticResource CharacterTitleStyle}" Text="Starships" />
+
+        <ListView Background="Transparent"
+                  BorderThickness="0" 
+                  ItemsSource="{Binding}" >
+
+            <ListView.ItemTemplate>
+                <DataTemplate  >
+                    <TextBlock Text="{Binding Name}" ToolTip="{Binding Model}"
+                               FontSize="{StaticResource FontSize-Large}" 
+                               Padding="0 4"/>
                 </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            </ListView.ItemTemplate>
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="Red" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+
+        </ListView>
+        
     </DockPanel>
 
 </UserControl>

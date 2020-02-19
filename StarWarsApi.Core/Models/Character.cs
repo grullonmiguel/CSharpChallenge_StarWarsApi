@@ -35,6 +35,8 @@ namespace StarWarsApi.Core.Models
         [JsonProperty]
         public string Mass { get; set; }
 
+        public string URL { get; set; }
+
         /// <summary>
         /// Gets or sets the films URLs.
         /// </summary>

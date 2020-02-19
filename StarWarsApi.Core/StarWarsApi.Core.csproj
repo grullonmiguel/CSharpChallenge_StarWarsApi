@@ -1,7 +1,29 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="obj\project.assets.json" />
+    <Content Include="obj\StarWarsApi.Core.csproj.nuget.dgspec.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="obj\Debug\netstandard2.0\StarWarsApi.Core.AssemblyInfoInputs.cache" />
+    <None Include="obj\Debug\netstandard2.0\StarWarsApi.Core.assets.cache" />
+    <None Include="obj\Debug\netstandard2.0\StarWarsApi.Core.csprojAssemblyReference.cache" />
+    <None Include="obj\StarWarsApi.Core.csproj.nuget.cache" />
+    <None Include="obj\StarWarsApi.Core.csproj.nuget.g.props" />
+    <None Include="obj\StarWarsApi.Core.csproj.nuget.g.targets" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="bin\Debug\netstandard2.0\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
+  </ItemGroup>
 
 </Project>

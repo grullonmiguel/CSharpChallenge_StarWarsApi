@@ -1,8 +1,7 @@
-﻿using StarWarsApi.Helpers;
-using StarWarsApi.Models;
-using StarWarsApi.Services;
+﻿using StarWarsApi.Core.Models;
+using StarWarsApi.Core.Services;
+using StarWarsApi.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,12 +14,14 @@ namespace StarWarsApi.ViewModels
         #region Fields
 
         private int? characterId;
-        private SwapiProcessor _swapiProcessor;
         private bool _isSearching;
+        private Character _characterSelected;
+        private ObservableCollection<Film> films;
         private ObservableCollection<Character> characters;
-        private Character _selectedCharacter;
-        private List<Starship> starships;
-        private List<Vehicle> vehicles;
+        private ObservableCollection<Starship> starships;
+        private ObservableCollection<Vehicle> vehicles;
+
+        private readonly ApiService _apiService;
 
         #endregion
 
@@ -29,23 +30,9 @@ namespace StarWarsApi.ViewModels
         /// <summary>
         /// Enabled when a numeric value greater than zero is entered
         /// </summary>
-        public bool CanSearch
-        {
-            get
-            {
-                if (CharacterId == null || CharacterId <= 0 || IsSearching == true)
-                {
-                    return false;
-                }
+        public bool CanSearch => CharacterId != null && CharacterId > 0 && IsSearching != true;
 
-                return true;
-            }
-        }
-
-        public int CharacterCount
-        {
-            get => Characters.Count;
-        }
+        public int CharacterCount => Characters.Count;
 
         /// <summary>
         /// The ID to search in the SWAPI API
@@ -69,16 +56,28 @@ namespace StarWarsApi.ViewModels
         /// <summary>
         /// Gets or sets the character selected
         /// </summary>
-        public Character SelectedCharacter
+        public Character CharacterSelected
         {
-            get => _selectedCharacter;
+            get => _characterSelected;
             set
             {
-                Set(ref _selectedCharacter, value);
-                Vehicles = SelectedCharacter?.VehicleList;
-                Starships = SelectedCharacter?.StarshipList;
+                Set(ref _characterSelected, value);
+
+                GetStarshipsAsync();
+                GetVehiclesAsync();
+                GetHomeworldAsync();
+                GetFilmsAsync();                
             }
         }
+
+        private string homeWorld;
+
+        public string HomeWorld
+        {
+            get => homeWorld;
+            set => Set(ref homeWorld, value);
+        }
+
 
         /// <summary>
         /// Set to True when API call is being made
@@ -89,13 +88,20 @@ namespace StarWarsApi.ViewModels
             set => Set(ref _isSearching, value);
         }
 
-        public List<Starship> Starships
+
+        public ObservableCollection<Film> Films
+        {
+            get => films;
+            set => Set(ref films, value);
+        }
+
+        public ObservableCollection<Starship> Starships
         {
             get => starships;
             set => Set(ref starships, value);
         }
 
-        public List<Vehicle> Vehicles
+        public ObservableCollection<Vehicle> Vehicles
         {
             get => vehicles;
             set => Set(ref vehicles, value);
@@ -112,51 +118,135 @@ namespace StarWarsApi.ViewModels
 
         public ShellViewModel()
         {
-            _swapiProcessor = new SwapiProcessor();
+            _apiService = new ApiService();
             Characters = new ObservableCollection<Character>();
-            SearchCharacterCommand = new RelayCommand(async () => await LoadCharacterAsync(), () => CanSearch);
+            Films = new ObservableCollection<Film>();
+            Starships = new ObservableCollection<Starship>();
+            Vehicles = new ObservableCollection<Vehicle>();
+            SearchCharacterCommand = new RelayCommand(async () => await GetCharacterAsync(), () => CanSearch);
         }
 
         #endregion
 
         #region Methods
 
+        private void ResetSearch()
+        {
+            CharacterId = null;
+            IsSearching = false;
+        }
+
+        private void ShowMessage(string message)
+        {
+            System.Windows.MessageBox.Show(message);
+        }
+
+        #endregion
+
+        #region Api Search
+
         /// <summary>
         /// Execute API call to SWAPI and add
         /// Character to list if successful
         /// </summary>
-        private async Task LoadCharacterAsync()
+        private async Task GetCharacterAsync()
         {
             try
             {
-                if (ValidateCharacterId()) 
+                if (Characters.Any(p => p.Id == CharacterId) || CharacterId == null || CharacterId <= 0)
                     return;
 
                 IsSearching = true;
 
-                var character = await _swapiProcessor.GetCharacterAsync((int)CharacterId);
+                var character = await _apiService.GetAsync<Character>($"https://swapi.co/api/people/{(int)CharacterId}");
 
-                Characters.Add(character);
+                Characters.Add(character.Value);
+
+                if (Characters.Count == 1)
+                    CharacterSelected = Characters.First();
 
                 OnPropertyChanged(nameof(CharacterCount));
             }
             catch (Exception e)
             {
-                System.Windows.MessageBox.Show(e.Message.ToString());
+                ShowMessage(e.Message.ToString());
             }
             finally
             {
-                CharacterId = null;
-                IsSearching = false;
+                ResetSearch();
             }
         }
 
-        private bool ValidateCharacterId()
+        private async Task GetFilmsAsync()
         {
-            return Characters.Any(p => p.Id == CharacterId) || CharacterId == null || CharacterId <= 0;
+            try
+            {
+                Films.Clear();
+
+                foreach (var url in CharacterSelected.Films)
+                {
+                    var film = await _apiService.GetAsync<Film>(url);
+                    Films.Add(film.Value);
+                }
+            }
+            catch (Exception e)
+            {
+                ShowMessage(e.Message.ToString());
+            }
+        }
+
+        private async Task GetHomeworldAsync()
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(CharacterSelected.Homeworld))
+                    return;
+
+                var world = await _apiService.GetAsync<Planet>(CharacterSelected.Homeworld);
+
+                HomeWorld = world.Value.Name;
+            }
+            catch (Exception e)
+            {
+                ShowMessage(e.Message.ToString());
+            }
+        }
+
+        private async Task GetStarshipsAsync()
+        {
+            try
+            {
+                Starships.Clear();
+                foreach (var url in CharacterSelected.Starships)
+                {
+                    var starship = await _apiService.GetAsync<Starship>(url);
+                    Starships.Add(starship.Value);
+                }
+            }
+            catch (Exception e)
+            {
+                ShowMessage(e.Message.ToString());
+            }
+        }
+
+        private async Task GetVehiclesAsync()
+        {
+            try
+            {
+                Vehicles.Clear();
+
+                foreach (var url in CharacterSelected.Vehicles)
+                {
+                    var vehicle = await _apiService.GetAsync<Vehicle>(url);
+                    Vehicles.Add(vehicle.Value);
+                }
+            }
+            catch (Exception e)
+            {
+                ShowMessage(e.Message.ToString());
+            }
         }
 
         #endregion
-
     }
 }

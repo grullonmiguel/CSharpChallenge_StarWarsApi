@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="StarWarsApi.Views.StarshipsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" >
+
+    <DockPanel>
+
+        <TextBlock DockPanel.Dock="Top" 
+                   FontSize="24"
+                   HorizontalAlignment="Left"
+                   Style="{StaticResource HeaderStyle}">Starships</TextBlock>
+
+        <ListBox Background="Transparent"
+                 BorderThickness="0"
+                 ItemsSource="{Binding}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}" 
+                               ToolTip="{Binding Model}" 
+                               Style="{StaticResource HeaderStyle}" 
+                               Padding="0 4" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </DockPanel>
+
+</UserControl>

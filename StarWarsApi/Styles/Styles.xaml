@@ -4,11 +4,17 @@
     <SolidColorBrush x:Key="BackgroundBrush1" Color="#FF2C333F" />
     <SolidColorBrush x:Key="BackgroundBrush2" Color="#FF1B222C" />
     <SolidColorBrush x:Key="BackgroundBrush3" Color="#AB151A23" />
+    <SolidColorBrush x:Key="BackgroundBrush4" Color="#FF21293C" />
     <SolidColorBrush x:Key="ButtonColor" Color="#FFFFFF00" />
     <SolidColorBrush x:Key="ButtonColorOver" Color="#FFFFD300" />
     <SolidColorBrush x:Key="ButtonColorPressed" Color="#FFFDA50F" />
     <SolidColorBrush x:Key="ButtonColorDisabled" Color="#FFC3C3C6" />
     <SolidColorBrush x:Key="FontYellow" Color="#FFFFFF00" />
+
+    <!--  A Style that affects all Separators  -->
+    <Style TargetType="Separator">
+        <Setter Property="Background" Value="{StaticResource BackgroundBrush3}" />
+    </Style>
 
     <Style TargetType="TextBlock" x:Key="BaseTextBlockStyle" >
         <Setter Property="Margin"                            Value="0"/>
@@ -28,9 +34,11 @@
         
     </Style>
 
-    <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" x:Key="TextBlockSwapi"> 
+    <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" x:Key="HeaderStyle"> 
         <Setter Property="FontWeight"                        Value="Bold" />
         <Setter Property="HorizontalAlignment"               Value="Center" />
+        <Setter Property="TextWrapping"                      Value="NoWrap"/>
+        <Setter Property="TextTrimming"                      Value="None" />
         <Setter Property="Foreground"                        Value="{StaticResource FontYellow}" />
     </Style>
     
@@ -86,10 +94,9 @@
         <Setter Property="AutoGenerateColumns" Value="False" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="HorizontalGridLinesBrush" Value="#F8F8F8" />
+        <Setter Property="HorizontalGridLinesBrush" Value="Transparent" />
         <Setter Property="GridLinesVisibility" Value="Horizontal" />
         <Setter Property="ClipboardCopyMode"  Value="IncludeHeader" />
-        <Setter Property="BorderBrush" Value="red" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CellStyle">
             <Setter.Value>
@@ -126,9 +133,10 @@
         <Setter Property="RowStyle">
             <Setter.Value>
                 <Style TargetType="DataGridRow">
-                    <Setter Property="Background" Value="{StaticResource BackgroundBrush1}" />
+                    <Setter Property="Background" Value="Transparent" />
                     <Setter Property="Foreground" Value="#FFFFFF99" />
                      <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="Padding" Value="80" />
                     <Style.Triggers>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Background"  Value="Yellow"/>
@@ -138,8 +146,7 @@
                                 <Condition Property="IsMouseOver" Value="True" />
                                 <Condition Property="IsSelected" Value="False" />
                             </MultiTrigger.Conditions>
-                            <Setter Property="Background" Value="{StaticResource BackgroundBrush2}" />
-                            <Setter Property="Foreground" Value="#FFFFFF" />
+                            <Setter Property="Background" Value="{StaticResource BackgroundBrush1}" /> 
                         </MultiTrigger>
                     </Style.Triggers>
                 </Style>
@@ -149,10 +156,18 @@
 
     <!--  A Style for a Border control that shows a shadow and rounded corners  -->
     <Style x:Key="Card" TargetType="Border">
-        <Setter Property="Padding" Value="24" />
-        <Setter Property="Background" Value="{StaticResource BackgroundBrush2}" />
+        <Setter Property="Padding" Value="16 8" />
+        <Setter Property="Background" Value="{StaticResource BackgroundBrush3}" />
         <Setter Property="CornerRadius" Value="0" />
-
+        <!--<Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect
+                    BlurRadius="4"
+                    Direction="315"
+                    Opacity="0.7"
+                    ShadowDepth="3" />
+            </Setter.Value>
+        </Setter>-->
     </Style>
 
 </ResourceDictionary>

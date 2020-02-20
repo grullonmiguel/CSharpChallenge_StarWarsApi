@@ -4,8 +4,11 @@ using StarWarsApi.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace StarWarsApi.ViewModels
 {
@@ -16,10 +19,12 @@ namespace StarWarsApi.ViewModels
         private bool _isSearching;
         private bool _isEnabled;
         private string homeWorld;
+        private string _characterImage;
         private Character _characterSelected;
         private Character _selectedItem;
 
         private readonly ApiService _apiService = new ApiService();
+        private readonly string _imagePath = "/StarWarsApi;component/Assets/";
 
         #endregion
 
@@ -34,7 +39,17 @@ namespace StarWarsApi.ViewModels
         public Character CharacterSelected
         {
             get => _characterSelected;
-            set => Set(ref _characterSelected, value);
+            set
+            {
+                Set(ref _characterSelected, value);
+                UpdateCharacterImage();
+            }
+        }
+
+        public string CharacterImage
+        {
+            get => _characterImage;
+            set => Set(ref _characterImage, value);
         }
 
         public Character SelectedItem
@@ -109,6 +124,21 @@ namespace StarWarsApi.ViewModels
         private void ShowMessage(string message)
         {
             System.Windows.MessageBox.Show(message);
+        }
+
+        private void UpdateCharacterImage()
+        {
+            // Note:
+            // Images are stored in the Assets directory
+            // The image 'Build Action' is set to 'Resource'
+            // The image is renamed to the character name with no spaces
+            // The UI will only display the images that exist
+
+            // Get the name from selected character and remove the empty space
+            var image = CharacterSelected.Name.Replace(" ", string.Empty) + ".png";
+
+            // Set the image using the path and image name
+            CharacterImage = $"{_imagePath}{image}";
         }
 
         #endregion

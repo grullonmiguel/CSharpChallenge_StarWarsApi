@@ -76,11 +76,15 @@
 
                 <DockPanel HorizontalAlignment="Left">
 
+                    <!-- Character Image -->
                     <Border DockPanel.Dock="Left" 
                             Width="200"
                             Height="200"
+                            Padding="16"
                             Background="{StaticResource MasterDetailBackgroundThemeBrush}">
-                        
+
+                        <Image Source="{Binding CharacterImage}" Opacity=".65"/>
+
                     </Border>
 
                     <DockPanel Margin="16 0" >

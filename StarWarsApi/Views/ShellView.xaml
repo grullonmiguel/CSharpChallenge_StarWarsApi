@@ -4,7 +4,6 @@
         xmlns:vm="clr-namespace:StarWarsApi.ViewModels"
         xmlns:views="clr-namespace:StarWarsApi.Views"
         Title="Swapi" Height="650" Width="960" 
-        FocusManager.FocusedElement="{Binding ElementName=txtSearch}"
         Style="{StaticResource WindowStyle}">
 
     <Window.DataContext>
@@ -32,10 +31,7 @@
                 </Grid.RowDefinitions>
 
                 <!-- Title -->
-                <StackPanel Margin="{StaticResource MediumLeftTopRightBottomMargin}">
-                    <TextBlock Grid.Row="0" Style="{StaticResource TitleStyle}" Text="SWAPI" />
-                    <TextBlock Grid.Row="1" Style="{StaticResource SubTitleStyle}" Text="The Star Wars API" />
-                </StackPanel>
+                <views:HeaderView Margin="{StaticResource MediumLeftTopRightBottomMargin}"/>
 
                 <!-- Characters -->
                 <ListView Grid.Row="1"
@@ -68,7 +64,8 @@
 
         </Border>
 
-        <Border Grid.Column="1" Background="{StaticResource ApplicationBackgroundThemeBrush}">
+        <Border Grid.Column="1" Background="{StaticResource ApplicationBackgroundThemeBrush}"
+                Visibility="{Binding IsEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
 
             <Grid Margin="24 0 24 24" >
 
@@ -96,10 +93,10 @@
                         <StackPanel DockPanel.Dock="Left" Margin="{StaticResource MediumRightMargin}">                                
                             <!-- Born -->
                             <TextBlock Text="Born" Style="{StaticResource CharacterDetailStyle}" />
-                            <TextBlock Text="{Binding CharacterSelected.BirthYear}" />
+                            <TextBlock Text="{Binding CharacterSelected.BirthYear}" Opacity=".5" />
                             <!-- Height -->
                             <TextBlock Text="Height" Style="{StaticResource CharacterDetailStyle}"  />
-                            <TextBlock Text="{Binding CharacterSelected.Height}" />
+                            <TextBlock Text="{Binding CharacterSelected.Height}" Opacity=".5" />
                             <!-- Homeworld -->
                             <TextBlock Text="Homeworld" Style="{StaticResource CharacterDetailStyle}"  />
                             <TextBlock Text="{Binding HomeWorld}" Opacity=".5" />
@@ -108,10 +105,10 @@
                         <StackPanel DockPanel.Dock="Left" Margin="{StaticResource MediumLeftMargin}">
                             <!-- Gender -->
                             <TextBlock Text="Gender" Style="{StaticResource CharacterDetailStyle}" />
-                            <TextBlock Text="{Binding CharacterSelected.Gender}" />
+                            <TextBlock Text="{Binding CharacterSelected.Gender}" Opacity=".5" />
                             <!-- Weight -->
                             <TextBlock Text="Weight" Style="{StaticResource CharacterDetailStyle}"  />
-                            <TextBlock Text="{Binding CharacterSelected.Mass}" />
+                            <TextBlock Text="{Binding CharacterSelected.Mass}" Opacity=".5"  />
                         </StackPanel>
                         
                     </DockPanel>
@@ -142,17 +139,23 @@
         </Border>
 
         <!-- Wait Message -->
-        <Border Grid.Column="0"
-                Grid.ColumnSpan="2"
-                Background="#99000000"
-                Visibility="{Binding Path=IsSearching, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Grid Grid.Column="0"
+              Grid.ColumnSpan="2"
+              Background="#99000000"
+              Visibility="{Binding Path=IsSearching, Converter={StaticResource BooleanToVisibilityConverter}}">
 
-            <TextBlock FontSize="40" 
-                       Style="{StaticResource TitleStyle}" 
-                       Text="Searching the SWAPI database..."
-                       Foreground="{StaticResource FontYellow}"/>
+            <StackPanel VerticalAlignment="Center">
 
-        </Border>
+                <Image Source="/StarWarsApi;component/Assets/logo-star-wars-png-7.png" 
+                       Width="500"
+                       Margin="0 24"/>
+                
+                <TextBlock Style="{StaticResource TitleStyle}"
+                           Text="Searching the SWAPI database..."
+                           Foreground="{StaticResource FontYellow}" />
+            </StackPanel>
+
+        </Grid>
 
         <TextBlock Grid.Row="3" 
                    Margin="0 0 24 8"

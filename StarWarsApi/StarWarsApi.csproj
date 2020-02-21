@@ -5,32 +5,61 @@
     <UseWPF>True</UseWPF>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Assets\Ackbar.png" />
     <None Remove="Assets\AnakinSkywalker.png" />
     <None Remove="Assets\at-at.png" />
     <None Remove="Assets\C-3PO.png" />
+    <None Remove="Assets\Characters\BobaFett.png" />
+    <None Remove="Assets\Characters\Bossk.png" />
+    <None Remove="Assets\Characters\C-3PO.png" />
+    <None Remove="Assets\Characters\IG-88.png" />
+    <None Remove="Assets\Characters\JarJarBinks.png" />
+    <None Remove="Assets\Characters\Obi-WanKenobi.png" />
+    <None Remove="Assets\Characters\R2-D2.png" />
+    <None Remove="Assets\Characters\Sebulba.png" />
+    <None Remove="Assets\Characters\Watto.png" />
     <None Remove="Assets\Chewbacca.png" />
     <None Remove="Assets\DarthVader.png" />
     <None Remove="Assets\GenericOutline.png" />
+    <None Remove="Assets\Greedo.png" />
+    <None Remove="Assets\HanSolo.png" />
+    <None Remove="Assets\JabbaDesilijicTiure.png" />
+    <None Remove="Assets\LeiaOrgana.png" />
     <None Remove="Assets\logo-star-wars-png-7.png" />
+    <None Remove="Assets\LukeSkywalker.png" />
     <None Remove="Assets\R2-D2.png" />
+    <None Remove="Assets\WilhuffTarkin.png" />
     <None Remove="Assets\Yoda.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\AnakinSkywalker.png" />
-    <Resource Include="Assets\C-3PO.png" />
-    <Resource Include="Assets\Chewbacca.png" />
-    <Resource Include="Assets\DarthVader.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\GenericOutline.png" />
+    <PackageReference Include="Unity" Version="5.11.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StarWarsApi.Core\StarWarsApi.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\Characters\Ackbar.png" />
+    <Resource Include="Assets\Characters\AnakinSkywalker.png" />
     <Resource Include="Assets\at-at.png" />
+    <Resource Include="Assets\Characters\BobaFett.png" />
+    <Resource Include="Assets\Characters\Bossk.png" />
+    <Resource Include="Assets\Characters\C-3PO.png" />
+    <Resource Include="Assets\Characters\Chewbacca.png" />
+    <Resource Include="Assets\Characters\DarthVader.png" />
+    <Resource Include="Assets\Characters\IG-88.png" />
+    <Resource Include="Assets\Characters\JarJarBinks.png" />
+    <Resource Include="Assets\Characters\Obi-WanKenobi.png" />
+    <Resource Include="Assets\Characters\R2-D2.png" />
+    <Resource Include="Assets\Characters\Sebulba.png" />
+    <Resource Include="Assets\Characters\Watto.png" />
+    <Resource Include="Assets\GenericOutline.png" />
+    <Resource Include="Assets\Characters\Greedo.png" />
+    <Resource Include="Assets\Characters\HanSolo.png" />
+    <Resource Include="Assets\Characters\JabbaDesilijicTiure.png" />
+    <Resource Include="Assets\Characters\LeiaOrgana.png" />
     <Resource Include="Assets\logo-star-wars-png-7.png" />
-    <Resource Include="Assets\R2-D2.png" />
-    <Resource Include="Assets\Yoda.png" />
+    <Resource Include="Assets\Characters\LukeSkywalker.png" />
+    <Resource Include="Assets\Characters\WilhuffTarkin.png" />
+    <Resource Include="Assets\Characters\Yoda.png" />
   </ItemGroup>
 </Project>

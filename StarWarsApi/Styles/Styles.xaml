@@ -40,6 +40,7 @@
         <Setter Property="HorizontalAlignment"               Value="Center" />
         <Setter Property="TextWrapping"                      Value="NoWrap"/>
         <Setter Property="TextTrimming"                      Value="None" />
+
         <Setter Property="FontSize"                          Value="{StaticResource FontSize-XXLarge}" />
         <Setter Property="Foreground"                        Value="{StaticResource ApplicationForegroundThemeBrush}" />
     </Style>
@@ -48,8 +49,8 @@
         <Setter Property="FontSize"                          Value="{StaticResource FontSize-Large}" />
     </Style>
 
-    <Style TargetType="TextBlock" BasedOn="{StaticResource TitleStyle}" x:Key="CharacterTitleStyle">
-        <Setter Property="FontSize"                         Value="{StaticResource FontSize-Larger}" />
+    <Style TargetType="TextBlock" BasedOn="{StaticResource TitleStyle}" x:Key="CharacterTitleStyle"> 
+        <Setter Property="FontSize"                         Value="{StaticResource FontSize-XLarge}" />
         <Setter Property="HorizontalAlignment"              Value="Left" />
     </Style>
 

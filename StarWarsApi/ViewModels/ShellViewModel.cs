@@ -24,7 +24,7 @@ namespace StarWarsApi.ViewModels
         private Character _selectedItem;
 
         private readonly ApiService _apiService = new ApiService();
-        private readonly string _imagePath = "/StarWarsApi;component/Assets/";
+        private readonly string _imagePath = "/StarWarsApi;component/Assets/Characters/";
 
         #endregion
 

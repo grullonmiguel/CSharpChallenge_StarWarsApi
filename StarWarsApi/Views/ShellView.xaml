@@ -80,7 +80,7 @@
                     <Border DockPanel.Dock="Left" 
                             Width="200"
                             Height="200"
-                            Padding="16"
+                            Padding="4"
                             Background="{StaticResource MasterDetailBackgroundThemeBrush}">
 
                         <Image Source="{Binding CharacterImage}" Opacity=".65"/>
@@ -119,24 +119,18 @@
                     
                 </DockPanel>
                 
-                <Grid Grid.Row="1" Margin="{StaticResource MediumTopMargin}">
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
+                <DockPanel Grid.Row="1" Margin="{StaticResource MediumTopMargin}">
                 
                     <!-- Films -->
-                    <views:FilmsView Grid.Column="0" DataContext="{Binding Films}" />
+                    <views:FilmsView Width="200" Grid.Column="0" DataContext="{Binding Films}" DockPanel.Dock="Left" Margin="0 0 16 0"/>
 
                     <!-- Starship Grid-->
-                    <views:StarshipsView Grid.Column="1" DataContext="{Binding Starships}" />
+                    <views:StarshipsView Width="200" Grid.Column="1" DataContext="{Binding Starships}" DockPanel.Dock="Left" Margin="0 0 16 0" />
 
                     <!-- Vehicles Grid-->
-                    <views:VehiclesView Grid.Column="2" DataContext="{Binding Vehicles}" />
+                    <views:VehiclesView Width="200" Grid.Column="2" DataContext="{Binding Vehicles}" DockPanel.Dock="Left" />
 
-                </Grid>
+                </DockPanel>
 
             </Grid>
             

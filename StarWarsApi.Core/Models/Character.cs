@@ -37,6 +37,8 @@ namespace StarWarsApi.Core.Models
 
         public string URL { get; set; }
 
+        public string World { get; set; }
+
         /// <summary>
         /// Gets or sets the films URLs.
         /// </summary>

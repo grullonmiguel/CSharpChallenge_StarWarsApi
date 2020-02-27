@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="StarWarsApi.Views.UserControls.CharacterInfo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" >
+
+    <StackPanel>
+
+        <!-- Character Name -->
+        <TextBlock Style="{StaticResource CharacterTitleStyle}" Text="{Binding Name}" />
+
+        <UniformGrid Columns="2">
+
+            <!-- Born -->
+            <StackPanel>
+                <TextBlock Text="Born" Style="{StaticResource CharacterDetailStyle}" />
+                <TextBlock Opacity=".5" Text="{Binding BirthYear}" />
+            </StackPanel>
+
+            <!-- Gender -->
+            <StackPanel>
+                <TextBlock Text="Gender" Style="{StaticResource CharacterDetailStyle}" />
+                <TextBlock Opacity=".5" Text="{Binding Gender}" />
+            </StackPanel>
+
+            <!-- Height -->
+            <StackPanel>
+                <TextBlock Text="Height" Style="{StaticResource CharacterDetailStyle}"  />
+                <TextBlock Opacity=".5" Text="{Binding Height}" />
+            </StackPanel>
+
+            <!-- Weight -->
+            <StackPanel>
+                <TextBlock Text="Weight" Style="{StaticResource CharacterDetailStyle}"  />
+                <TextBlock Opacity=".5" Text="{Binding Mass}" />
+            </StackPanel>
+
+            <!-- Homeworld -->
+            <StackPanel>
+                <TextBlock Text="Homeworld" Style="{StaticResource CharacterDetailStyle}"  />
+                <TextBlock Opacity=".5" Text="{Binding World}" />
+            </StackPanel>
+
+        </UniformGrid>
+
+    </StackPanel>
+
+</UserControl>

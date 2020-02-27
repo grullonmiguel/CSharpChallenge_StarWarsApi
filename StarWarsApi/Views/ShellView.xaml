@@ -2,9 +2,10 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:StarWarsApi.ViewModels"
-        xmlns:views="clr-namespace:StarWarsApi.Views"
-        Title="Swapi" Height="650" Width="960" 
-        Style="{StaticResource WindowStyle}">
+        xmlns:controls="clr-namespace:StarWarsApi.Views.UserControls"
+        Title="Swapi" Height="800" Width="980" 
+        Style="{StaticResource WindowStyle}" 
+        WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
         <vm:ShellViewModel/>
@@ -31,7 +32,7 @@
                 </Grid.RowDefinitions>
 
                 <!-- Title -->
-                <views:HeaderView Margin="{StaticResource MediumLeftTopRightBottomMargin}"/>
+                <controls:Header Margin="{StaticResource MediumLeftTopRightBottomMargin}"/>
 
                 <!-- Characters -->
                 <ListView Grid.Row="1"
@@ -64,7 +65,8 @@
 
         </Border>
 
-        <Border Grid.Column="1" Background="{StaticResource ApplicationBackgroundThemeBrush}"
+        <Border Grid.Column="1" 
+                Background="{StaticResource ApplicationBackgroundThemeBrush}"
                 Visibility="{Binding IsEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
 
             <Grid Margin="24 0 24 24" >
@@ -77,58 +79,25 @@
                 <WrapPanel >
 
                     <!-- Character Image -->
-                    <Border Width="200"
-                            Height="200"
-                            Padding="4"
-                            Margin="0 0 16 0"
-                            Background="{StaticResource MasterDetailBackgroundThemeBrush}">
+                    <controls:CharacterPortrait Margin="0 0 16 0"
+                                                Headshot="{Binding Path=CharacterImage}"
+                                                Background="{StaticResource MasterDetailBackgroundThemeBrush}" />
 
-                        <Image Source="{Binding CharacterImage}" Opacity=".65"/>
-
-                    </Border>
-
-                    <DockPanel  >
-                        
-                        <!-- Character Name -->
-                        <TextBlock Text="{Binding CharacterSelected.Name}" 
-                                   Style="{StaticResource CharacterTitleStyle}" 
-                                   DockPanel.Dock="Top" />
-
-                        <StackPanel Margin="{StaticResource MediumRightMargin}">                                
-                            <!-- Born -->
-                            <TextBlock Text="Born" Style="{StaticResource CharacterDetailStyle}" />
-                            <TextBlock Text="{Binding CharacterSelected.BirthYear}" Opacity=".5" />
-                            <!-- Height -->
-                            <TextBlock Text="Height" Style="{StaticResource CharacterDetailStyle}"  />
-                            <TextBlock Text="{Binding CharacterSelected.Height}" Opacity=".5" />
-                            <!-- Homeworld -->
-                            <TextBlock Text="Homeworld" Style="{StaticResource CharacterDetailStyle}"  />
-                            <TextBlock Text="{Binding HomeWorld}" Opacity=".5" />
-                        </StackPanel>
-
-                        <StackPanel Margin="{StaticResource MediumLeftMargin}">
-                            <!-- Gender -->
-                            <TextBlock Text="Gender" Style="{StaticResource CharacterDetailStyle}" />
-                            <TextBlock Text="{Binding CharacterSelected.Gender}" Opacity=".5" />
-                            <!-- Weight -->
-                            <TextBlock Text="Weight" Style="{StaticResource CharacterDetailStyle}"  />
-                            <TextBlock Text="{Binding CharacterSelected.Mass}" Opacity=".5"  />
-                        </StackPanel>
-                        
-                    </DockPanel>
+                    <!-- Character Info -->
+                    <controls:CharacterInfo DataContext="{Binding CharacterSelected}"  />
                     
                 </WrapPanel>
-                
+
                 <WrapPanel Grid.Row="1" Margin="{StaticResource MediumTopMargin}" Orientation="Horizontal">
                 
                     <!-- Films -->
-                    <views:FilmsView Width="200" DataContext="{Binding Films}" Margin="0 0 16 8"/>
+                    <controls:Films Width="200" DataContext="{Binding Films}" Margin="0 0 16 8"/>
 
-                    <!-- Starship Grid-->
-                    <views:StarshipsView Width="200" DataContext="{Binding Starships}" Margin="0 0 16 8" />
+                    <!-- Starships-->
+                    <controls:Starships Width="200" DataContext="{Binding Starships}" Margin="0 0 16 8" />
 
-                    <!-- Vehicles Grid-->
-                    <views:VehiclesView Width="200" DataContext="{Binding Vehicles}" />
+                    <!-- Vehicles -->
+                    <controls:Vehicles Width="200" DataContext="{Binding Vehicles}" />
 
                 </WrapPanel>
 
@@ -137,23 +106,8 @@
         </Border>
 
         <!-- Wait Message -->
-        <Grid Grid.Column="0"
-              Grid.ColumnSpan="2"
-              Background="#99000000"
-              Visibility="{Binding Path=IsSearching, Converter={StaticResource BooleanToVisibilityConverter}}">
-
-            <StackPanel VerticalAlignment="Center">
-
-                <Image Source="/StarWarsApi;component/Assets/logo-star-wars-png-7.png" 
-                       Width="500"
-                       Margin="0 24"/>
-                
-                <TextBlock Style="{StaticResource TitleStyle}"
-                           Text="Searching the SWAPI database..."
-                           Foreground="{StaticResource FontYellow}" />
-            </StackPanel>
-
-        </Grid>
+        <controls:WaitScreen Grid.ColumnSpan="2" 
+                             Visibility="{Binding Path=IsSearching, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
         <TextBlock Grid.Row="3" 
                    Margin="0 0 24 16"

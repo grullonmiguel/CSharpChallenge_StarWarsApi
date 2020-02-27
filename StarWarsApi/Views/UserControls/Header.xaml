@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="StarWarsApi.Views.UserControls.Header"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DockPanel>
+
+        <!-- Logo-->
+        <Image Width="75" DockPanel.Dock="Left" Source="/StarWarsApi;component/Assets/at-at.png" />
+
+        <!-- Title -->
+        <StackPanel Margin="16 0 0 0" >
+            <TextBlock Style="{StaticResource TitleStyle}" Text="SWAPI" />
+            <TextBlock Style="{StaticResource SubTitleStyle}" Text="The Star Wars API" />
+        </StackPanel>
+        
+    </DockPanel>
+</UserControl>

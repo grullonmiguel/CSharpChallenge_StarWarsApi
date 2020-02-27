@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="StarWarsApi.Views.UserControls.WaitScreen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" >
+
+    <Grid Background="#99000000" >
+        <StackPanel VerticalAlignment="Center">
+
+            <Image  Width="500" Source="/StarWarsApi;component/Assets/logo-star-wars-png-7.png" />
+
+            <TextBlock Style="{StaticResource TitleStyle}" Text="Searching the SWAPI database..." Foreground="{StaticResource FontYellow}" />
+
+        </StackPanel>
+    </Grid>
+
+</UserControl>

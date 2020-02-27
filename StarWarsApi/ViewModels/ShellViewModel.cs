@@ -68,12 +68,6 @@ namespace StarWarsApi.ViewModels
             }
         }
 
-        public string HomeWorld
-        {
-            get => homeWorld;
-            set => Set(ref homeWorld, value);
-        }
-
         public bool IsEnabled
         {
             get => _isEnabled;
@@ -118,7 +112,6 @@ namespace StarWarsApi.ViewModels
             Films.Clear();
             Starships.Clear();
             Vehicles.Clear();
-            HomeWorld = string.Empty;
         }
 
         private void ShowMessage(string message)
@@ -194,7 +187,7 @@ namespace StarWarsApi.ViewModels
                 return;
 
             var world = await _apiService.GetAsync<Planet>(CharacterSelected.Homeworld);
-            HomeWorld = world.Value.Name;
+            CharacterSelected.World = world.Value.Name;
         }
 
         private async Task GetStarshipsAsync()

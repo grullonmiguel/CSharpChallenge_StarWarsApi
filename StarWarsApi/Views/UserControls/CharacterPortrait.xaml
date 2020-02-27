@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="StarWarsApi.Views.UserControls.CharacterPortrait"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:StarWarsApi.Views.UserControls"
+             Name="portraitWindow">
+
+    <Border Padding="4" 
+            Height="{Binding Height,ElementName=portraitWindow, FallbackValue=200}"
+            Width="{Binding Width,ElementName=portraitWindow, FallbackValue=200}"
+            Background="{Binding Background, ElementName=portraitWindow, FallbackValue={StaticResource MasterDetailBackgroundThemeBrush}}">
+
+        <Image Opacity=".75" Source="{Binding Headshot, ElementName=portraitWindow}" />
+        
+    </Border>
+    
+</UserControl>

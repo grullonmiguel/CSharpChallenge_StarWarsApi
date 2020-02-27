@@ -4,12 +4,12 @@
     <Grid>
 
         <!-- AT-AT Logo-->
-        <Image Width="50" Margin="0 16 0 0"  
+        <Image Width="75" Margin="0 16 0 0"  
                HorizontalAlignment="Left" 
                Source="/StarWarsApi;component/Assets/at-at.png" />
 
         <!-- Title -->
-        <StackPanel Margin="48 0 0 0" >
+        <StackPanel Margin="75 0 0 0" >
             <TextBlock Grid.Row="0" Style="{StaticResource TitleStyle}" Text="SWAPI" />
             <TextBlock Grid.Row="1" Style="{StaticResource SubTitleStyle}" Text="The Star Wars API" />
         </StackPanel>

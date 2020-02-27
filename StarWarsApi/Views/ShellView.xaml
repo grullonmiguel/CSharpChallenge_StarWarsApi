@@ -37,7 +37,7 @@
                 <ListView Grid.Row="1"
                           Background="Transparent"
                           BorderThickness="0"
-                          Width="300"
+                          Width="275"
                           ItemsSource="{Binding Characters}"
                           SelectedItem="{Binding SelectedItem}">
 
@@ -52,7 +52,7 @@
                             <Setter Property="BorderThickness" Value="0" />
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Foreground" Value="Red" />
+                                    <Setter Property="Foreground" Value="Crimson" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -74,27 +74,27 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <DockPanel HorizontalAlignment="Left">
+                <WrapPanel >
 
                     <!-- Character Image -->
-                    <Border DockPanel.Dock="Left" 
-                            Width="200"
+                    <Border Width="200"
                             Height="200"
                             Padding="4"
+                            Margin="0 0 16 0"
                             Background="{StaticResource MasterDetailBackgroundThemeBrush}">
 
                         <Image Source="{Binding CharacterImage}" Opacity=".65"/>
 
                     </Border>
 
-                    <DockPanel Margin="16 0" >
+                    <DockPanel  >
                         
                         <!-- Character Name -->
                         <TextBlock Text="{Binding CharacterSelected.Name}" 
                                    Style="{StaticResource CharacterTitleStyle}" 
-                                   DockPanel.Dock="Top" HorizontalAlignment="Left" />
+                                   DockPanel.Dock="Top" />
 
-                        <StackPanel DockPanel.Dock="Left" Margin="{StaticResource MediumRightMargin}">                                
+                        <StackPanel Margin="{StaticResource MediumRightMargin}">                                
                             <!-- Born -->
                             <TextBlock Text="Born" Style="{StaticResource CharacterDetailStyle}" />
                             <TextBlock Text="{Binding CharacterSelected.BirthYear}" Opacity=".5" />
@@ -106,7 +106,7 @@
                             <TextBlock Text="{Binding HomeWorld}" Opacity=".5" />
                         </StackPanel>
 
-                        <StackPanel DockPanel.Dock="Left" Margin="{StaticResource MediumLeftMargin}">
+                        <StackPanel Margin="{StaticResource MediumLeftMargin}">
                             <!-- Gender -->
                             <TextBlock Text="Gender" Style="{StaticResource CharacterDetailStyle}" />
                             <TextBlock Text="{Binding CharacterSelected.Gender}" Opacity=".5" />
@@ -117,20 +117,20 @@
                         
                     </DockPanel>
                     
-                </DockPanel>
+                </WrapPanel>
                 
-                <DockPanel Grid.Row="1" Margin="{StaticResource MediumTopMargin}">
+                <WrapPanel Grid.Row="1" Margin="{StaticResource MediumTopMargin}" Orientation="Horizontal">
                 
                     <!-- Films -->
-                    <views:FilmsView Width="200" Grid.Column="0" DataContext="{Binding Films}" DockPanel.Dock="Left" Margin="0 0 16 0"/>
+                    <views:FilmsView Width="200" DataContext="{Binding Films}" Margin="0 0 16 8"/>
 
                     <!-- Starship Grid-->
-                    <views:StarshipsView Width="200" Grid.Column="1" DataContext="{Binding Starships}" DockPanel.Dock="Left" Margin="0 0 16 0" />
+                    <views:StarshipsView Width="200" DataContext="{Binding Starships}" Margin="0 0 16 8" />
 
                     <!-- Vehicles Grid-->
-                    <views:VehiclesView Width="200" Grid.Column="2" DataContext="{Binding Vehicles}" DockPanel.Dock="Left" />
+                    <views:VehiclesView Width="200" DataContext="{Binding Vehicles}" />
 
-                </DockPanel>
+                </WrapPanel>
 
             </Grid>
             
@@ -156,7 +156,7 @@
         </Grid>
 
         <TextBlock Grid.Row="3" 
-                   Margin="0 0 24 8"
+                   Margin="0 0 24 16"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Bottom"
                    Foreground="#FF999999"

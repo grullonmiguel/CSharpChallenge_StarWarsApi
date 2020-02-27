@@ -11,5 +11,6 @@
     <System:Double x:Key="FontSize-Larger">24</System:Double>
     <System:Double x:Key="FontSize-XLarge">32</System:Double>
     <System:Double x:Key="FontSize-XXLarge">40</System:Double>
+    <System:Double x:Key="FontSize-XXXLarge">48</System:Double>
 
 </ResourceDictionary>

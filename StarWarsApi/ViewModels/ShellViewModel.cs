@@ -71,6 +71,10 @@ namespace StarWarsApi.ViewModels
 
         public ObservableCollection<Vehicle> Vehicles { get; private set; } = new ObservableCollection<Vehicle>();
 
+        public bool HasFilms => Films.Count > 0;
+        public bool HasStarships => Starships.Count > 0;
+        public bool HasVehicles => Vehicles.Count > 0;
+
         #endregion
 
         #region Constructor
@@ -148,6 +152,7 @@ namespace StarWarsApi.ViewModels
                 var film = await _apiService.GetAsync<Film>(url);
                 Films.Add(film.Value);
             }
+            OnPropertyChanged(nameof(HasFilms));
         }
 
         private async Task<string> GetHomeworldAsync(string homeworld)
@@ -166,6 +171,7 @@ namespace StarWarsApi.ViewModels
                 var starship = await _apiService.GetAsync<Starship>(url);
                 Starships.Add(starship.Value);
             }
+            OnPropertyChanged(nameof(HasStarships));
         }
 
         private async Task GetVehiclesAsync()
@@ -175,6 +181,7 @@ namespace StarWarsApi.ViewModels
                 var vehicle = await _apiService.GetAsync<Vehicle>(url);
                 Vehicles.Add(vehicle.Value);
             }
+            OnPropertyChanged(nameof(HasVehicles));
         }
 
         #endregion

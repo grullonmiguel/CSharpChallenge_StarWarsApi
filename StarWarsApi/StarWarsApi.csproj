@@ -9,16 +9,21 @@
     <None Remove="Assets\AnakinSkywalker.png" />
     <None Remove="Assets\at-at.png" />
     <None Remove="Assets\C-3PO.png" />
+    <None Remove="Assets\Characters\AdiGallia.png" />
     <None Remove="Assets\Characters\BB8.png" />
     <None Remove="Assets\Characters\BobaFett.png" />
     <None Remove="Assets\Characters\Bossk.png" />
     <None Remove="Assets\Characters\C-3PO.png" />
+    <None Remove="Assets\Characters\DarthMaul.png" />
+    <None Remove="Assets\Characters\Finn.png" />
     <None Remove="Assets\Characters\GregarTypho.png" />
     <None Remove="Assets\Characters\Grievous.png" />
     <None Remove="Assets\Characters\IG-88.png" />
     <None Remove="Assets\Characters\JarJarBinks.png" />
     <None Remove="Assets\Characters\Obi-WanKenobi.png" />
+    <None Remove="Assets\Characters\PoeDameron.png" />
     <None Remove="Assets\Characters\R2-D2.png" />
+    <None Remove="Assets\Characters\Rey.PNG" />
     <None Remove="Assets\Characters\Sebulba.png" />
     <None Remove="Assets\Characters\Watto.png" />
     <None Remove="Assets\Chewbacca.png" />
@@ -42,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Characters\Ackbar.png" />
+    <Resource Include="Assets\Characters\AdiGallia.png" />
     <Resource Include="Assets\Characters\AnakinSkywalker.png" />
     <Resource Include="Assets\at-at.png" />
     <Resource Include="Assets\Characters\BB8.png" />
@@ -49,13 +55,17 @@
     <Resource Include="Assets\Characters\Bossk.png" />
     <Resource Include="Assets\Characters\C-3PO.png" />
     <Resource Include="Assets\Characters\Chewbacca.png" />
+    <Resource Include="Assets\Characters\DarthMaul.png" />
     <Resource Include="Assets\Characters\DarthVader.png" />
+    <Resource Include="Assets\Characters\Finn.png" />
     <Resource Include="Assets\Characters\GregarTypho.png" />
     <Resource Include="Assets\Characters\Grievous.png" />
     <Resource Include="Assets\Characters\IG-88.png" />
     <Resource Include="Assets\Characters\JarJarBinks.png" />
     <Resource Include="Assets\Characters\Obi-WanKenobi.png" />
+    <Resource Include="Assets\Characters\PoeDameron.png" />
     <Resource Include="Assets\Characters\R2-D2.png" />
+    <Resource Include="Assets\Characters\Rey.PNG" />
     <Resource Include="Assets\Characters\Sebulba.png" />
     <Resource Include="Assets\Characters\Watto.png" />
     <Resource Include="Assets\GenericOutline.png" />

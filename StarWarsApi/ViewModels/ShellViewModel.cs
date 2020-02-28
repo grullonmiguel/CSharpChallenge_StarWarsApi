@@ -4,11 +4,8 @@ using StarWarsApi.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace StarWarsApi.ViewModels
 {
@@ -18,20 +15,15 @@ namespace StarWarsApi.ViewModels
 
         private bool _isSearching;
         private bool _isEnabled;
-        private string homeWorld;
-        private string _characterImage;
         private Character _characterSelected;
         private Character _selectedItem;
 
         private readonly ApiService _apiService = new ApiService();
-        private readonly string _imagePath = "/StarWarsApi;component/Assets/Characters/";
 
         #endregion
 
         #region Properties
-
-        public bool CanSearch => IsSearching != true;
-
+        
         public int CharacterCount => Characters.Count;
 
         public List<Character> Characters { get; set; }
@@ -39,17 +31,7 @@ namespace StarWarsApi.ViewModels
         public Character CharacterSelected
         {
             get => _characterSelected;
-            set
-            {
-                Set(ref _characterSelected, value);
-                UpdateCharacterImage();
-            }
-        }
-
-        public string CharacterImage
-        {
-            get => _characterImage;
-            set => Set(ref _characterImage, value);
+            set => Set(ref _characterSelected, value);
         }
 
         public Character SelectedItem
@@ -75,7 +57,7 @@ namespace StarWarsApi.ViewModels
         }
 
         /// <summary>
-        /// Set to True when API calling API
+        /// Set to True when calling API
         /// </summary>
         public bool IsSearching
         {
@@ -119,21 +101,6 @@ namespace StarWarsApi.ViewModels
             System.Windows.MessageBox.Show(message);
         }
 
-        private void UpdateCharacterImage()
-        {
-            // Note:
-            // Images are stored in the Assets directory
-            // The image 'Build Action' is set to 'Resource'
-            // The image is renamed to the character name with no spaces
-            // The UI will only display the images that exist
-
-            // Get the name from selected character and remove the empty space
-            var image = CharacterSelected.Name.Replace(" ", string.Empty) + ".png";
-
-            // Set the image using the path and image name
-            CharacterImage = $"{_imagePath}{image}";
-        }
-
         #endregion
 
         #region Api Search
@@ -149,19 +116,20 @@ namespace StarWarsApi.ViewModels
                 IsSearching = true;
 
                 ClearLists();
-
+              
                 await GetCharacterAsync();
-                await GetHomeworldAsync();
-                await GetVehiclesAsync();
-                await GetStarshipsAsync();
-                await GetFilmsAsync();
+
+                var vehicles  = GetVehiclesAsync();
+                var starships = GetStarshipsAsync();
+                var films     = GetFilmsAsync();
+
+                await Task.WhenAll(vehicles, starships, films);
+
+                IsSearching = false;
             }
             catch (Exception e)
             {
-                ShowMessage(e.Message.ToString());
-            }
-            finally
-            {
+                ShowMessage(e.Message.ToString()); 
                 IsSearching = false;
             }
         }
@@ -169,6 +137,7 @@ namespace StarWarsApi.ViewModels
         private async Task GetCharacterAsync()
         {
             var character = await _apiService.GetAsync<Character>(SelectedItem.URL);
+            character.Value.World = await GetHomeworldAsync(character.Value.Homeworld);
             CharacterSelected = character.Value;
         }
 
@@ -181,13 +150,13 @@ namespace StarWarsApi.ViewModels
             }
         }
 
-        private async Task GetHomeworldAsync()
+        private async Task<string> GetHomeworldAsync(string homeworld)
         {
-            if (string.IsNullOrEmpty(CharacterSelected.Homeworld))
-                return;
+            if (string.IsNullOrEmpty(homeworld))
+                return string.Empty;
 
-            var world = await _apiService.GetAsync<Planet>(CharacterSelected.Homeworld);
-            CharacterSelected.World = world.Value.Name;
+            var world = await _apiService.GetAsync<Planet>(homeworld);
+            return world.Value.Name;            
         }
 
         private async Task GetStarshipsAsync()

@@ -79,25 +79,26 @@
                 <WrapPanel >
 
                     <!-- Character Image -->
-                    <controls:CharacterPortrait Margin="0 0 16 0"
-                                                Headshot="{Binding Path=CharacterImage}"
-                                                Background="{StaticResource MasterDetailBackgroundThemeBrush}" />
+                    <controls:CharacterPortrait DataContext="{Binding CharacterSelected}"
+                                                Margin="{StaticResource MediumRightMargin}"                                               
+                                                Background="{StaticResource MasterDetailBackgroundThemeBrush}" 
+                                                VerticalAlignment="Top"/>
 
                     <!-- Character Info -->
-                    <controls:CharacterInfo DataContext="{Binding CharacterSelected}"  />
+                    <controls:CharacterInfo DataContext="{Binding CharacterSelected, Mode=OneWay}"  />
                     
                 </WrapPanel>
 
                 <WrapPanel Grid.Row="1" Margin="{StaticResource MediumTopMargin}" Orientation="Horizontal">
                 
                     <!-- Films -->
-                    <controls:Films Width="200" DataContext="{Binding Films}" Margin="0 0 16 8"/>
+                    <controls:Films Width="200" DataContext="{Binding Films, Mode=OneWay}" Margin="0 0 16 8"/>
 
                     <!-- Starships-->
-                    <controls:Starships Width="200" DataContext="{Binding Starships}" Margin="0 0 16 8" />
+                    <controls:Starships Width="200" DataContext="{Binding Starships, Mode=OneWay}" Margin="0 0 16 8" />
 
                     <!-- Vehicles -->
-                    <controls:Vehicles Width="200" DataContext="{Binding Vehicles}" />
+                    <controls:Vehicles Width="200" DataContext="{Binding Vehicles, Mode=OneWay}" />
 
                 </WrapPanel>
 

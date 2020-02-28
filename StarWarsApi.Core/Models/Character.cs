@@ -5,6 +5,8 @@ namespace StarWarsApi.Core.Models
 {
     public class Character
     {
+        private readonly string _imagePath = "/StarWarsApi;component/Assets/Characters/";
+
         [JsonProperty]
         public int Id { get; set; }
 
@@ -38,6 +40,24 @@ namespace StarWarsApi.Core.Models
         public string URL { get; set; }
 
         public string World { get; set; }
+
+        public string ImagePath
+        {
+            get
+            {
+                    // Note:
+                    // Images are stored in the Assets directory
+                    // The image 'Build Action' is set to 'Resource'
+                    // The image is renamed to the character name with no spaces
+                    // The UI will only display the images that exist
+
+                    // Get the name from selected character and remove the empty space
+                    var image = Name.Replace(" ", string.Empty) + ".png";
+
+                    // Set the image using the path and image name
+                    return $"{_imagePath}{image}";
+            }
+        }
 
         /// <summary>
         /// Gets or sets the films URLs.

@@ -4,12 +4,13 @@
              xmlns:local="clr-namespace:StarWarsApi.Views.UserControls"
              Name="portraitWindow">
 
-    <Border Padding="4" 
+    <Border Padding="8" 
+            CornerRadius="0 0 24 24"
             Height="{Binding Height,ElementName=portraitWindow, FallbackValue=200}"
             Width="{Binding Width,ElementName=portraitWindow, FallbackValue=200}"
             Background="{Binding Background, ElementName=portraitWindow, FallbackValue={StaticResource MasterDetailBackgroundThemeBrush}}">
 
-        <Image Opacity=".75" Source="{Binding Headshot, ElementName=portraitWindow}" />
+        <Image Opacity=".65" Source="{Binding ImagePath}" />
         
     </Border>
     

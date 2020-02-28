@@ -11,15 +11,6 @@ namespace StarWarsApi.Views.UserControls
             InitializeComponent();
         }
 
-        public ImageSource Headshot
-        {
-            get { return (ImageSource)GetValue(HeadshotProperty); }
-            set { SetValue(HeadshotProperty, value); }
-        }
-
-        public static readonly DependencyProperty HeadshotProperty = DependencyProperty.Register("Headshot",
-                                                                                        typeof(ImageSource),
-                                                                                        typeof(CharacterPortrait));
         public new Brush Background
         {
             get { return (Brush)GetValue(BackgroundProperty); }
